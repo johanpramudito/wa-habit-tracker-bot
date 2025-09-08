@@ -115,7 +115,7 @@ const CONVERSATIONAL_RULES = [
 
   // 2. Respons Terhadap Emosi Pengguna
   {
-    pattern: /\b(malas|capek|lelah|gak mood|ga mood)\b/i,
+    pattern: /\b(stress|stres|malas|capek|lelah|gak mood|ga mood)\b/i,
     reply: async (match, message) => {
       const habits = await habitModel.getAllHabitsForUser(message.from);
       if (habits && habits.length > 0) {
@@ -177,16 +177,6 @@ const CONVERSATIONAL_RULES = [
       return "Kegagalan adalah bagian dari proses. Yang penting, kamu tidak menyerah. Besok kita coba lagi ya?";
     },
   },
-  {
-    pattern: /\b(berhasil|sukses|bisa)\b/i,
-    reply: () =>
-      choose([
-        "Aku tahu kamu bisa! Selamat ya! Aku ikut bangga.",
-        "Luar biasa! Ini bukti kalau usaha tidak mengkhianati hasil. Apa rahasianya?",
-        "Mantap! Terus lanjutkan momentum baik ini!",
-      ]),
-  },
-
   // 3. Aturan Refleksi (ELIZA Style)
   {
     pattern: /\bbutuh (.+)\b/i,
