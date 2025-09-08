@@ -1,0 +1,13 @@
+{
+"gym": "gym",
+"olahraga": "gym",
+"workout": "gym",
+"baca": "read",
+"membaca": "read",
+"read": "read",
+"meditasi": "meditate",
+"meditate": "meditate",
+"minum air": "drink_water",
+"air": "drink_water",
+"pushup": "pushup"
+}

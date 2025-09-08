@@ -1,0 +1,29 @@
+# Dependencies
+# Folder ini berisi semua library yang diinstal oleh npm.
+/node_modules
+
+# WhatsApp Session Data
+# Folder ini berisi kredensial login sesi WhatsApp Anda dan SANGAT PENTING untuk tidak diunggah.
+/.wwebjs_auth/
+/.wwebjs_cache/
+
+# Application Data
+# File database SQLite berisi data pengguna dan tidak boleh diunggah.
+/data/*.sqlite
+
+# Log Files
+# File log akan terus berubah dan tidak perlu dimasukkan ke repository.
+/logs/*.log
+
+# Environment Variables
+# File .env berisi konfigurasi lokal dan rahasia.
+.env
+
+# NPM debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System files (opsional, tapi praktik yang baik)
+.DS_Store
+Thumbs.db

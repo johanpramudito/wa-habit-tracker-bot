@@ -1,0 +1,9 @@
+{
+    "intents": [
+        { "name": "ADD_HABIT", "regex": "^(?:addhabit|add habit|tambah\\s+habit|tambah\\s+kebiasaan|tambah|baru)\\s+(.+)$", "priority": 90 },
+        { "name": "MARK_DONE", "regex": "^(?:done|sudah|oke|ok|siap|beres)(?:\\s+(.+))?$", "priority": 80 },
+        { "name": "STATUS", "regex": "^(?:status|streak|cek status|cek streak)(?:\\s+(.+))?$," , "priority": 70 },
+        { "name": "LIST_HABITS", "regex": "^(?:list ?habits|listhabits|daftar kebiasaan|lihat kebiasaan|my habits)$", "priority": 60 },
+        { "name": "SET_REMINDER", "regex": "^(?:set reminder|ingatkan|setel pengingat|jadwalkan)\\s+(.+)$", "priority": 50 }
+    ]
+}
