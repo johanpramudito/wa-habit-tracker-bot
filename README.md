@@ -108,6 +108,28 @@ npm run reset-session
 
 Setelah itu, jalankan kembali `npm start` untuk memindai QR code yang baru.
 
+## 🖥️ Penggunaan CLI
+
+Apabila Anda ingin menjalankan bot ini tanpa perlu akun Whatsapp, Anda dapat menggunakan CLI yang tersedia di bot ini.
+
+```
+npm run cli
+```
+
+Setelah itu, akan muncul CLI berikut di terminal dan Anda siap menggunakan CLI tersebut dengan tampilan seperti di bawah ini.
+
+```
+> whatsapp-habit-bot@1.0.0 cli
+> node cli.js
+
+🚀 Starting Habit Buddy in CLI mode...
+   - Ketik pesan Anda dan tekan Enter.
+   - Ketik 'exit' untuk keluar.
+---
+Database connection established.
+👤 ANDA >
+```
+
 ## 🧪 Testing
 
 Proyek ini dilengkapi dengan _unit tests_ untuk memastikan logika inti berjalan dengan baik.
