@@ -45,27 +45,6 @@ const CONVERSATIONAL_RULES = [
       ]),
   },
   {
-    pattern: /\b(hai|halo|selamat (pagi|siang|sore|malam))\b/i,
-    reply: async (match, message) => {
-      const habits = await habitModel.getAllHabitsForUser(message.from);
-      if (!habits || habits.length === 0) {
-        return choose([
-          "Halo! Siap untuk memulai kebiasaan pertamamu? Coba ketik `tambah [nama kebiasaan]`.",
-          "Hai! Selamat datang. Yuk, mulai lacak kebiasaanmu!",
-          "Halo! Siap untuk produktif hari ini? 💪",
-          "Hai! Semangat ya. Jangan lupa catat kebiasaanmu nanti.",
-          "Pagi! Apa rencanamu hari ini?",
-        ]);
-      }
-
-      const randomHabit = choose(habits);
-      return choose([
-        `Halo! Hari yang baik untuk menyelesaikan **${randomHabit.habit_name}**. Semangat ya!`,
-        `Hai! Jangan lupa, ada kebiasaan **${randomHabit.habit_name}** yang menunggumu. Kamu pasti bisa! 💪`,
-      ]);
-    },
-  },
-  {
     pattern: /\b(makasih|terima kasih|thanks|thx)\b/i,
     reply: () =>
       choose([
@@ -76,24 +55,12 @@ const CONVERSATIONAL_RULES = [
   },
   {
     pattern: /apa kabar/i,
-    reply: async (match, message) => {
-      const habits = await habitModel.getAllHabitsForUser(message.from);
-      let longestStreak = 0;
-      let streakHabit = "";
-
-      for (const habit of habits) {
-        const status = await habitModel.getHabitStatus(habit.id);
-        if (status.streak > longestStreak) {
-          longestStreak = status.streak;
-          streakHabit = habit.habit_name;
-        }
-      }
-
-      if (longestStreak > 2) {
-        return `Kabar baik! Aku makin semangat lihat streak **${streakHabit}** kamu yang sudah ${longestStreak} hari! Bagaimana kabarmu?`;
-      }
-      return "Kabar baik! Aku siap membantumu mencatat kemajuan. Bagaimana denganmu?";
-    },
+    reply: () =>
+      choose([
+        "Kabar baik! Aku siap membantumu mencatat kemajuan. Bagaimana denganmu?",
+        "Baik! Terima kasih sudah bertanya. Bagaimana kabarmu?",
+        "Aku baik-baik saja! Siap menyemangatimu hari ini. Gimana kabarmu?",
+      ]) 
   },
   {
     pattern: /lagi apa/i,
@@ -116,34 +83,19 @@ const CONVERSATIONAL_RULES = [
   // 2. Respons Terhadap Emosi Pengguna
   {
     pattern: /\b(stress|stres|malas|capek|lelah|gak mood|ga mood)\b/i,
-    reply: async (match, message) => {
-      const habits = await habitModel.getAllHabitsForUser(message.from);
-      if (habits && habits.length > 0) {
-        const randomHabit = choose(habits);
-        return choose([
-          `Aku mengerti perasaan itu. Tapi hei, ingat kebiasaanmu untuk **${randomHabit.habit_name}**? Menyelesaikannya, bahkan sebentar saja, pasti bikin kamu merasa lebih baik!`,
-          `Tidak apa-apa merasa lelah. Coba istirahat sejenak. Setelah itu, mungkin kamu bisa coba selesaikan **${randomHabit.habit_name}**? Satu langkah kecil saja sudah cukup.`,
-        ]);
-      }
-      return choose([
+    reply: () =>
+      choose([
+        "Aku mengerti perasaan itu. Ingat, istirahat itu penting juga. Setelah itu, kita bisa coba lagi ya!",
         "Tidak apa-apa merasa lelah. Istirahat sejenak, lalu kita mulai lagi pelan-pelan!",
-        "Semua orang butuh istirahat. Jangan terlalu keras pada dirimu sendiri ya.",
-      ]);
-    },
+      ]),
   },
   {
     pattern: /\b(aku|saya) (berhasil|sukses|bisa)\b/i,
-    reply: async (match, message) => {
-      const habits = await habitModel.getAllHabitsForUser(message.from);
-      if (habits && habits.length > 0) {
-        const randomHabit = choose(habits);
-        const status = await habitModel.getHabitStatus(randomHabit.id);
-        if (status.streak > 1) {
-          return `Tentu saja kamu bisa! Apalagi streak **${randomHabit.habit_name}** kamu sudah **${status.streak} hari**! Aku ikut bangga dengan kemajuanmu!`;
-        }
-      }
-      return `Aku tahu kamu bisa! Selamat ya! Aku ikut bangga.`;
-    },
+    reply: () =>
+      choose([
+        "Wah, hebat! Aku bangga padamu!",
+        "Kerja kerasmu membuahkan hasil! Terus pertahankan semangat ini!",
+      ]),
   },
   {
     pattern: /\b(senang|bahagia|happy) banget\b/i,
@@ -165,17 +117,11 @@ const CONVERSATIONAL_RULES = [
   },
   {
     pattern: /\b(gagal|kacau|berantakan)\b/i,
-    reply: async (match, message) => {
-      const habits = await habitModel.getAllHabitsForUser(message.from);
-      if (habits && habits.length > 0) {
-        const randomHabit = choose(habits);
-        return choose([
-          `Hei, tidak apa-apa. Satu hari yang buruk tidak merusak semua kemajuanmu. Besok kita coba lagi ya untuk **${randomHabit.habit_name}**?`,
-          `Kegagalan adalah bagian dari proses. Yang penting, kamu tidak menyerah. Fokus lagi ke **${randomHabit.habit_name}** besok, oke?`,
-        ]);
-      }
-      return "Kegagalan adalah bagian dari proses. Yang penting, kamu tidak menyerah. Besok kita coba lagi ya?";
-    },
+    reply: () => 
+      choose([
+        "Gagal itu bagian dari proses belajar. Yang penting kamu sudah mencoba!",
+        "Setiap orang pernah mengalami kegagalan. Yang penting adalah bagaimana kita bangkit kembali.",
+      ]),
   },
   // 3. Aturan Refleksi (ELIZA Style)
   {
@@ -233,14 +179,11 @@ const CONVERSATIONAL_RULES = [
   {
     pattern:
       /\b(aku|saya) (bingung|gak tau|ga tau) (mau|harus) (apa|ngapain)\b/i,
-    reply: async (match, message) => {
-      const habits = await habitModel.getAllHabitsForUser(message.from);
-      if (habits && habits.length > 0) {
-        const randomHabit = choose(habits);
-        return `Kalau bingung, coba fokus ke satu hal saja. Bagaimana kalau kita mulai dengan **${randomHabit.habit_name}** hari ini?`;
-      }
-      return "Kalau bingung, coba mulai dengan hal yang paling mudah. Apa satu hal kecil yang bisa kamu lakukan sekarang?";
-    },
+    reply: () =>
+      choose([
+        "Bingung itu normal. Coba pikirkan satu hal kecil yang bisa kamu lakukan sekarang.",
+        "Kadang kita memang butuh waktu untuk mencari tahu. Mungkin bisa mulai hobi sederhana dulu",
+      ]),
   },
 
   // 5. Pertanyaan Tentang Bot
