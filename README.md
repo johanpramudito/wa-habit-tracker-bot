@@ -134,3 +134,7 @@ npm test
 - Disarankan untuk **tidak menggunakan nomor WhatsApp utama Anda** untuk _testing_ atau _deployment_. Gunakan nomor cadangan untuk keamanan.
 - Bot ini berbasis aturan, bukan AI canggih. Responsnya terbatas pada pola yang telah didefinisikan.
 - Jaga kerahasiaan folder `.wwebjs_auth` karena berisi data sesi login Anda.
+
+## 🎬 Demo Interaksi
+
+![Demo Habit Buddy](./git.gif)
