@@ -83,11 +83,13 @@ const CONVERSATIONAL_RULES = [
   // 2. Respons Terhadap Emosi Pengguna
   {
     pattern: /\b(stress|stres|malas|capek|lelah|gak mood|ga mood)\b/i,
-    reply: () =>
-      choose([
-        "Aku mengerti perasaan itu. Ingat, istirahat itu penting juga. Setelah itu, kita bisa coba lagi ya!",
-        "Tidak apa-apa merasa lelah. Istirahat sejenak, lalu kita mulai lagi pelan-pelan!",
-      ]),
+    reply: (match) => {
+      const reflected = reflect(match.input || match[0]);
+      return choose([
+        `Aku mengerti kalau kamu merasa ${reflected}. Ingat, istirahat itu penting juga. Setelah itu, kita bisa coba lagi ya!`,
+        `Tidak apa-apa merasa saat ${reflected}. Istirahat sejenak, lalu kita mulai lagi pelan-pelan!`,
+      ]);
+    },
   },
   {
     pattern: /\b(aku|saya) (berhasil|sukses|bisa)\b/i,
@@ -99,21 +101,24 @@ const CONVERSATIONAL_RULES = [
   },
   {
     pattern: /\b(senang|bahagia|happy) banget\b/i,
-    reply: () =>
-      choose([
-        "Wah, ikut senang mendengarnya! Apa yang membuatmu bahagia hari ini?",
-        "Itu kabar baik! Rayakan momen ini, kamu pantas mendapatkannya.",
-        "Kerja kerasmu terbayar ya! Terus pertahankan perasaan positif ini!",
-      ]),
+    reply: (match) => {
+      const reflected = reflect(match.input || match[0]);
+      return choose([
+        `Itu kabar baik! Rayakan momen pada saat ${reflected} ini, kamu pantas mendapatkannya.`,
+        `Kerja kerasmu terbayar ya! Terus pertahankan perasaan saat ${reflected} ini!`,
+      ]);
+    },
   },
   {
     pattern: /\b(sedih|galau|kecewa)\b/i,
-    reply: () =>
-      choose([
-        "Aku turut prihatin mendengarnya. Ingat, setiap hari adalah kesempatan baru untuk memulai lagi.",
-        "Mengakui perasaan sedih adalah langkah pertama untuk jadi lebih baik. Kamu hebat.",
-        "Tidak apa-apa untuk merasa tidak baik-baik saja. Peluk jauh untukmu.",
-      ]),
+    reply: (match) => {
+      const reflected = reflect(match.input || match[0]);
+      return choose([
+        `Aku turut prihatin mendengarnya. Ingat, saat ${reflected} dalam hidup ini, setiap hari adalah kesempatan baru untuk memulai lagi.`,
+        `Mengakui perasaan ${reflected} adalah langkah pertama untuk jadi lebih baik. Kamu hebat.`,
+        `Tidak apa-apa untuk merasa ${reflected}. Peluk jauh untukmu.`,
+      ]);
+    },
   },
   {
     pattern: /\b(gagal|kacau|berantakan)\b/i,
